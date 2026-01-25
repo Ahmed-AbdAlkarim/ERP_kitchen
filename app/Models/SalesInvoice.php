@@ -14,6 +14,7 @@ class SalesInvoice extends Model
         'invoice_date',
         'user_id',
         'customer_id',
+        'quotation_id',
         'subtotal',
         'discount',
         'total',
@@ -45,4 +46,11 @@ class SalesInvoice extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function quotation()
+    {
+        return $this->belongsTo(Quotation::class, 'quotation_id');
+    }
+
+
 }

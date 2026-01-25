@@ -124,6 +124,28 @@
       </a>
     </li>
     @endcan
+
+    @can('view_contracts')
+    <!-- Contracts -->
+    <li class="menu-item {{ request()->is('admin/contracts*') ? 'active open' : '' }}">
+      <a href="{{ route('admin.contracts.index') }}" class="menu-link">
+        <i class="menu-icon tf-icons ti ti-file-text"></i>
+        <div>عقود الاتفاق</div>
+      </a>
+    </li>
+    @endcan
+
+
+    @can('view_terms')
+    <!-- Terms & Conditions -->
+    <li class="menu-item {{ request()->is('admin/terms*') ? 'active open' : '' }}">
+      <a href="{{ route('admin.terms.index') }}" class="menu-link">
+        <i class="menu-icon tf-icons ti ti-list-check"></i>
+        <div>الشروط والأحكام</div>
+      </a>
+    </li>
+    @endcan
+
   
 
     @can('view_sales_returns')

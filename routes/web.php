@@ -18,6 +18,10 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\StockExcelController;
 use App\Http\Controllers\Admin\SalesReturnController;
+use App\Http\Controllers\Admin\ContractController;
+use App\Http\Controllers\Admin\TermConditionController;
+
+
 
 use App\Livewire\Actions\Logout;
 
@@ -96,6 +100,12 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     ========================= */
 
     Route::middleware('permission:view_customers')->group(function () {
+
+        Route::get(
+                'customers/{customer}/quotations',
+                [ContractController::class, 'getCustomerQuotations']
+            )->middleware('auth')
+            ->name('customers.quotations');
 
         // create لازم قبل {customer}
         Route::get('customers/create', [CustomerController::class, 'create'])
@@ -295,6 +305,16 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
             ->name('quotations.update');
     });
 
+    Route::middleware('permission:convert_quotation')->group(function () {
+
+        Route::post(
+            'quotations/{quotation}/convert',
+            [App\Http\Controllers\Admin\QuotationController::class, 'convertToInvoice']
+        )
+        ->whereNumber('quotation')
+        ->name('quotations.convert');
+    });
+
     Route::middleware('permission:print_quotation')->group(function () {
         Route::get('quotations/{quotation}/print',
             [App\Http\Controllers\Admin\QuotationController::class, 'print'])
@@ -309,6 +329,56 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::delete('quotations/{quotation}', [App\Http\Controllers\Admin\QuotationController::class, 'destroy'])
             ->whereNumber('quotation')
             ->name('quotations.destroy');
+    });
+
+    /* =========================
+    | عقود الاتفاق
+    ========================= */
+
+    Route::middleware('permission:create_contract')->group(function () {
+
+        Route::get('contracts/create', [ContractController::class, 'create'])
+            ->name('contracts.create');
+
+        Route::post('contracts', [ContractController::class, 'store'])
+            ->name('contracts.store');
+    });
+
+    Route::middleware('permission:view_contracts')->group(function () {
+
+        Route::get('contracts', [ContractController::class, 'index'])
+            ->name('contracts.index');
+
+        Route::get('contracts/{contract}', [ContractController::class, 'show'])
+            ->whereNumber('contract')
+            ->name('contracts.show');
+
+        Route::get('contracts/{contract}/print', [ContractController::class, 'print'])
+        ->whereNumber('contract')
+        ->name('contracts.print');
+    });
+
+    
+    /* =========================
+    | الشروط والأحكام
+    ========================= */
+
+    Route::middleware('permission:view_terms')->group(function () {
+
+        Route::get('terms', [TermConditionController::class, 'index'])
+            ->name('terms.index');
+
+        Route::post('terms', [TermConditionController::class, 'store'])
+            ->middleware('permission:create_term')
+            ->name('terms.store');
+
+        Route::put('terms/{term}', [TermConditionController::class, 'update'])
+            ->middleware('permission:edit_term')
+            ->name('terms.update');
+
+        Route::delete('terms/{term}', [TermConditionController::class, 'destroy'])
+            ->middleware('permission:delete_term')
+            ->name('terms.destroy');
     });
 
 

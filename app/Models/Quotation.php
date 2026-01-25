@@ -35,5 +35,15 @@ class Quotation extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    public function salesInvoice()
+    {
+        return $this->hasOne(SalesInvoice::class, 'quotation_id');
+    }
+
+    public function contract()
+    {
+        return $this->hasOne(Contract::class);
+    }
+
 }
 

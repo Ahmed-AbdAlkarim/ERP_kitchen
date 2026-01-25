@@ -7,6 +7,9 @@ use App\Models\Quotation;
 use App\Models\QuotationItem;
 use App\Models\Customer;
 use App\Models\Product;
+use App\Models\SalesInvoice;
+use App\Models\SalesInvoiceItem;
+use App\Models\TermCondition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -104,8 +107,9 @@ class QuotationController extends Controller
 
     public function show(Quotation $quotation)
     {
-        $quotation->load('items', 'customer');
-        return view('admin.quotations.show', compact('quotation'));
+        $quotation->load('items', 'customer', 'salesInvoice');
+        $cashboxes = \App\Models\Cashbox::where('type', 'daily')->get();
+        return view('admin.quotations.show', compact('quotation', 'cashboxes'));
     }
 
     public function edit(Quotation $quotation)
@@ -184,10 +188,19 @@ class QuotationController extends Controller
         }
     }
 
-    public function print(Quotation $quotation)
+    public function print($quotation)
     {
-        $quotation->load('items', 'customer');
-        return view('admin.quotations.print', compact('quotation'));
+        $quotation = Quotation::with([
+            'customer',
+            'items',
+            'createdBy'
+        ])->findOrFail($quotation);
+
+        $terms = TermCondition::where('active', true)
+            ->orderBy('sort_order')
+            ->get();
+
+        return view('admin.quotations.print', compact('quotation', 'terms'));
     }
 
 
@@ -203,4 +216,114 @@ class QuotationController extends Controller
             ->route('admin.quotations.index')
             ->with('success', 'تم حذف عرض السعر');
     }
+
+
+    public function convertToInvoice(Request $request, Quotation $quotation)
+    {
+        if ($quotation->status !== 'pending') {
+            abort(403);
+        }
+
+        if (SalesInvoice::where('quotation_id', $quotation->id)->exists()) {
+            abort(403);
+        }
+
+        $request->validate([
+            'payment_status' => 'required|in:paid,partial,installment',
+            'cashbox_id'     => 'nullable|required_if:payment_status,paid,partial|exists:cashboxes,id',
+            'amount'         => 'nullable|required_if:payment_status,paid,partial|numeric|min:0',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+
+            $total = $quotation->total;
+            $paid  = 0;
+
+            if (in_array($request->payment_status, ['paid', 'partial'])) {
+                $paid = $request->amount;
+            }
+
+            // ✅ check الدفع الكلي
+            if ($request->payment_status === 'paid' && $paid < $total) {
+                throw new \Exception('يرجى إدخال المبلغ كامل في حالة الدفع الكلي');
+            }
+
+            $remaining = $total - $paid;
+
+            $paymentMethod = match ($request->payment_status) {
+                'paid', 'partial' => 'cash',
+                'installment'     => 'installment',
+            };
+
+            // 1️⃣ إنشاء الفاتورة
+            $invoice = SalesInvoice::create([
+                'invoice_number'    => 'S-' . date('Ymd') . '-' . rand(1000, 9999),
+                'invoice_date'      => now(),
+                'user_id'           => auth()->id(),
+                'customer_id'       => $quotation->customer_id,
+                'quotation_id'      => $quotation->id,
+                'subtotal'          => $quotation->subtotal,
+                'discount'          => 0,
+                'total'             => $total,
+                'payment_method'    => $paymentMethod,
+                'status'            => $request->payment_status,
+                'paid_amount'       => $paid,
+                'remaining_amount' => $remaining,
+            ]);
+
+            // 2️⃣ الأصناف + المخزون
+            foreach ($quotation->items as $item) {
+
+                $product = Product::lockForUpdate()->find($item->product_id);
+
+                SalesInvoiceItem::create([
+                    'sales_invoice_id' => $invoice->id,
+                    'product_id'       => $product->id,
+                    'qty'              => $item->quantity,
+                    'price'            => $item->price,
+                    'total'            => $item->total,
+                    'profit'           => 0,
+                ]);
+
+                if (!$product->is_service) {
+                    $product->decrement('stock', $item->quantity);
+                }
+            }
+
+            // 3️⃣ تسجيل الدفع في الخزنة
+            if ($paid > 0) {
+                app(\App\Services\CashboxService::class)->addTransaction(
+                    $request->cashbox_id,
+                    'in',
+                    $paid,
+                    'sales_invoice',
+                    $invoice->id,
+                    'تحصيل فاتورة بيع من عرض سعر #' . $quotation->quotation_number
+                );
+            }
+
+            // 4️⃣ تحديث حالة عرض السعر
+            $quotation->update([
+                'status' => 'converted',
+                'converted_by' => auth()->id(),
+                'converted_at' => now(),
+            ]);
+
+            DB::commit();
+
+            return redirect()
+                ->route('admin.sales-invoices.show', $invoice->id)
+                ->with('success', 'تم تحويل عرض السعر إلى فاتورة بيع');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withErrors($e->getMessage());
+        }
+    }
+
+
+
+
 }
