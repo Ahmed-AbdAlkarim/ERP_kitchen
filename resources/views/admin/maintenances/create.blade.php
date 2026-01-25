@@ -82,7 +82,7 @@
 
                     <!-- Cost -->
                     <div class="col-md-6 mb-3">
-                        <label for="cost" class="form-label">التكلفة (ج.م) <span class="text-danger">*</span></label>
+                        <label for="cost" class="form-label">التكلفة (ر.س) <span class="text-danger">*</span></label>
                         <input type="number" name="cost" id="cost" class="form-control @error('cost') is-invalid @enderror"
                                value="{{ old('cost') }}" step="0.01" min="0" placeholder="0.00" required>
                         @error('cost')

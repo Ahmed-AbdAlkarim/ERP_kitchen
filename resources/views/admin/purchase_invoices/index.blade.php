@@ -65,7 +65,7 @@
                                     <td class="fw-bold">{{ $invoice->invoice_number }}</td>
                                     <td>{{ $invoice->supplier->name }}</td>
                                     <td>{{ \Carbon\Carbon::parse($invoice->date)->format('d/m/Y') }}</td>
-                                    <td class="fw-bold text-success">{{ number_format($invoice->total_cost, 2) }} ج.م</td>
+                                    <td class="fw-bold text-success">{{ number_format($invoice->total_cost, 2) }} ر.س</td>
                                     <td>
                                         @switch($invoice->payment_status)
                                             @case('paid')

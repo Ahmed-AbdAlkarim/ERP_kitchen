@@ -20,8 +20,8 @@
                 <p><strong>رقم الفاتورة:</strong> {{ $invoice->invoice_number }}</p>
                 <p><strong>المورد:</strong> {{ $invoice->supplier->name }}</p>
                 <p><strong>التاريخ:</strong> {{ $invoice->date }}</p>
-                <p><strong>المصاريف الإضافية:</strong> {{ number_format($invoice->additional_expenses, 2) }} ج.م</p>
-                <p><strong>الإجمالي النهائي:</strong> {{ number_format($invoice->total_cost, 2) }} ج.م</p>
+                <p><strong>المصاريف الإضافية:</strong> {{ number_format($invoice->additional_expenses, 2) }} ر.س</p>
+                <p><strong>الإجمالي النهائي:</strong> {{ number_format($invoice->total_cost, 2) }} ر.س</p>
                 <p><strong>حالة الدفع:</strong>
                     @if($invoice->payment_status == 'paid') مدفوع
                     @elseif($invoice->payment_status == 'due') أجل
@@ -29,8 +29,8 @@
                     @endif
                 </p>
                 @if($invoice->payment_status != 'paid')
-                    <p><strong>المبلغ المدفوع:</strong> {{ number_format($invoice->paid_amount, 2) }} ج.م</p>
-                    <p><strong>المتبقي:</strong> {{ number_format($invoice->due_amount, 2) }} ج.م</p>
+                    <p><strong>المبلغ المدفوع:</strong> {{ number_format($invoice->paid_amount, 2) }} ر.س</p>
+                    <p><strong>المتبقي:</strong> {{ number_format($invoice->due_amount, 2) }} ر.س</p>
                 @endif
 
                 <p><strong>ملاحظات:</strong> {{ $invoice->note ?? 'لا توجد ملاحظات' }}</p>
@@ -54,8 +54,8 @@
                         <tr>
                             <td>{{ $item->product->name }}</td>
                             <td>{{ $item->quantity }}</td>
-                            <td>{{ number_format($item->purchase_price, 2) }} ج.م</td>
-                            <td>{{ number_format($item->total, 2) }} ج.م</td>
+                            <td>{{ number_format($item->purchase_price, 2) }} ر.س</td>
+                            <td>{{ number_format($item->total, 2) }} ر.س</td>
                         </tr>
                     @endforeach
                 </tbody>

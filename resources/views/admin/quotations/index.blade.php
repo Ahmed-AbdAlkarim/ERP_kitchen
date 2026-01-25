@@ -67,7 +67,7 @@
                                 <td>{{ $q->issue_date }}</td>
                                 <td>{{ $q->expiry_date }}</td>
 
-                                <td>{{ number_format($q->total, 2) }} ج.م</td>
+                                <td>{{ number_format($q->total, 2) }} ر.س</td>
 
                                 <td>
                                     @if($q->status === 'pending')

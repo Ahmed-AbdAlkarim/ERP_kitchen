@@ -122,7 +122,7 @@
                                         <form action="{{ route('admin.maintenances.collect', $maintenance->id) }}" method="POST">
                                             @csrf
                                             <div class="modal-body">
-                                                <p>تحصيل مبلغ {{ number_format($maintenance->cost, 2) }} ج.م من العميل {{ $maintenance->customer->name ?? 'غير محدد' }}</p>
+                                                <p>تحصيل مبلغ {{ number_format($maintenance->cost, 2) }} ر.س من العميل {{ $maintenance->customer->name ?? 'غير محدد' }}</p>
                                                 <div class="mb-3">
                                                     <label for="cashbox_id{{ $maintenance->id }}" class="form-label">الخزنة</label>
                                                     <select name="cashbox_id" id="cashbox_id{{ $maintenance->id }}" class="form-select" required>

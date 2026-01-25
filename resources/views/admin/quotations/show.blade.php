@@ -42,7 +42,7 @@
                             data-bs-toggle="modal"
                             data-bs-target="#convertQuotationModal">
                         <i class="fas fa-file-invoice me-1"></i>
-                        تحويل لفاتورة بيع
+                       اصدار فاتورة
                     </button>
                 @endif
             @endcan
@@ -95,11 +95,11 @@
             <div class="card shadow-sm mb-4">
                 <div class="card-header fw-bold">الإجماليات</div>
                 <div class="card-body">
-                    <p>قبل الضريبة: {{ number_format($quotation->subtotal, 2) }} ج.م</p>
-                    <p>الضريبة: {{ number_format($quotation->tax, 2) }} ج.م</p>
+                    <p>قبل الضريبة: {{ number_format($quotation->subtotal, 2) }} ر.س</p>
+                    <p>الضريبة: {{ number_format($quotation->tax, 2) }} ر.س</p>
                     <hr>
                     <h5 class="text-success">
-                        الإجمالي: {{ number_format($quotation->total, 2) }} ج.م
+                        الإجمالي: {{ number_format($quotation->total, 2) }} ر.س
                     </h5>
                 </div>
             </div>

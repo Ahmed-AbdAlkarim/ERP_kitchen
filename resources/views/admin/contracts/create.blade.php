@@ -50,39 +50,44 @@
 </div>
 </div>
 
-{{-- تفاصيل العقد --}}
 <div class="card mb-4">
-<div class="card-header"><strong>تفاصيل العقد</strong></div>
-<div class="card-body" id="detailsWrapper">
+    <div class="card-header"><strong>تفاصيل العقد</strong></div>
 
-@foreach($defaultDetails as $i => $title)
-<div class="row mb-2">
-    <div class="col-md-4">
-        <input type="text"
-               class="form-control"
-               name="details[{{ $i }}][title]"
-               value="{{ $title }}"
-               readonly>
+    <div class="card-body">
+        <div class="row" id="detailsWrapper">
+
+            @foreach($defaultDetails as $i => $title)
+                <div class="col-md-6 mb-3 contract-detail-row">
+                    <div class="row align-items-center">
+                        <div class="col-5">
+                            <input type="text"
+                                   class="form-control"
+                                   name="details[{{ $i }}][title]"
+                                   value="{{ $title }}"
+                                   readonly>
+                        </div>
+                        <div class="col-7">
+                            <input type="text"
+                                   class="form-control"
+                                   name="details[{{ $i }}][value]"
+                                   placeholder="اكتب التفاصيل">
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+
+        </div>
     </div>
-    <div class="col-md-8">
-        <input type="text"
-               class="form-control"
-               name="details[{{ $i }}][value]"
-               placeholder="اكتب التفاصيل">
+
+    <div class="card-footer">
+        <button type="button"
+                id="addDetail"
+                class="btn btn-sm btn-success">
+            + إضافة تفصيلة
+        </button>
     </div>
 </div>
-@endforeach
 
-</div>
-
-<div class="card-footer">
-<button type="button"
-        id="addDetail"
-        class="btn btn-sm btn-success">
-    + إضافة تفصيلة
-</button>
-</div>
-</div>
 
 <div class="text-end">
 <button type="submit" class="btn btn-primary">
@@ -133,26 +138,29 @@ document.getElementById('customerSelect').addEventListener('change', function ()
 // إضافة تفصيلة
 document.getElementById('addDetail').onclick = function () {
     let html = `
-    <div class="row mb-2 align-items-center contract-detail-row">
-        <div class="col-md-4">
-            <input type="text"
-                   class="form-control"
-                   name="details[${index}][title]"
-                   placeholder="اسم التفصيلة">
-        </div>
-        <div class="col-md-7">
-            <input type="text"
-                   class="form-control"
-                   name="details[${index}][value]"
-                   placeholder="تفاصيل التفصيلة">
-        </div>
-        <div class="col-md-1 text-center">
-            <button type="button"
-                    class="btn btn-sm btn-danger remove-detail">
-                ✖
-            </button>
+    <div class="col-md-6 mb-3 contract-detail-row">
+        <div class="row align-items-center">
+            <div class="col-5">
+                <input type="text"
+                    class="form-control"
+                    name="details[${index}][title]"
+                    placeholder="اسم التفصيلة">
+            </div>
+            <div class="col-6">
+                <input type="text"
+                    class="form-control"
+                    name="details[${index}][value]"
+                    placeholder="تفاصيل التفصيلة">
+            </div>
+            <div class="col-1 text-center">
+                <button type="button"
+                        class="btn btn-sm btn-danger remove-detail">
+                    ✖
+                </button>
+            </div>
         </div>
     </div>`;
+
     document.getElementById('detailsWrapper')
         .insertAdjacentHTML('beforeend', html);
     index++;

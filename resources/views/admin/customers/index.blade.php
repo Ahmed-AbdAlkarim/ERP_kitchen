@@ -74,13 +74,13 @@
                                     @if(auth()->user()->can('show_customer_debts'))
                                     <td class="fw-bold text-danger">
                                         @can('show_customer_debts')
-                                        {{ number_format($customer->debt, 2) }} ج.م
+                                        {{ number_format($customer->debt, 2) }} ر.س
                                         @endcan
                                     </td>
                                     @endif
 
                                     <td class="fw-bold text-success">
-                                        {{ number_format($customer->balance, 2) }} ج.م
+                                        {{ number_format($customer->balance, 2) }} ر.س
                                     </td>
                                     
                                     @if(auth()->user()->can('show_customer_details') || auth()->user()->can('edit_customer') || auth()->user()->can('delete_customer'))

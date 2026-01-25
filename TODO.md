@@ -1,3 +1,5 @@
-- [x] Update create.blade.php to include subtotal, discount, and total fields in the totals section.
-- [x] Update JavaScript in create.blade.php to calculate subtotal as sum of items, and total = subtotal - discount.
-- [x] Make customer field similar to product field with datalist for searching by name or phone, displaying name only.
+- [x] Split $contract->details into two halves using PHP in Blade template
+- [x] Wrap the two tables in a flex container for side-by-side display
+- [x] Update table structure for first half with correct numbering
+- [x] Update table structure for second half with continued numbering
+- [x] Adjust CSS classes for proper spacing

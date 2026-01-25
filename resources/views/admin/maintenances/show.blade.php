@@ -60,7 +60,7 @@
                         <dd class="col-sm-9">{{ $maintenance->fault_type }}</dd>
 
                         <dt class="col-sm-3">التكلفة:</dt>
-                        <dd class="col-sm-9">{{ number_format($maintenance->cost, 2) }} ج.م</dd>
+                        <dd class="col-sm-9">{{ number_format($maintenance->cost, 2) }} ر.س</dd>
 
                         <dt class="col-sm-3">تاريخ التسليم:</dt>
                         <dd class="col-sm-9">{{ $maintenance->delivery_date ? $maintenance->delivery_date->format('Y-m-d') : 'غير محدد' }}</dd>
@@ -176,7 +176,7 @@
                 <form action="{{ route('admin.maintenances.collect', $maintenance->id) }}" method="POST">
                     @csrf
                     <div class="modal-body">
-                        <p>تحصيل مبلغ {{ number_format($maintenance->cost, 2) }} ج.م من العميل {{ $maintenance->customer->name ?? 'غير محدد' }}</p>
+                        <p>تحصيل مبلغ {{ number_format($maintenance->cost, 2) }} ر.س من العميل {{ $maintenance->customer->name ?? 'غير محدد' }}</p>
                         <div class="mb-3">
                             <label for="cashbox_id" class="form-label">الخزنة</label>
                             <select name="cashbox_id" id="cashbox_id" class="form-select" required>

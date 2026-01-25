@@ -72,7 +72,7 @@
                                     <td>{{ $expense->invoice_number }}</td>
                                     <td>{{ $expense->date }}</td>
                                     <td>{{ $expense->supplier ? $expense->supplier->name : 'غير محدد' }}</td>
-                                    <td>{{ number_format($expense->additional_expenses, 2) }} ج.م</td>
+                                    <td>{{ number_format($expense->additional_expenses, 2) }} ر.س</td>
                                 </tr>
                             @empty
                                 <tr>
@@ -114,7 +114,7 @@
                                     <td>{{ $expense->category }}</td>
                                     <td>{{ $expense->expense_date }}</td>
                                     <td>{{ $expense->cashbox ? $expense->cashbox->name : 'غير محدد' }}</td>
-                                    <td>{{ number_format($expense->amount, 2) }} ج.م</td>
+                                    <td>{{ number_format($expense->amount, 2) }} ر.س</td>
                                 </tr>
                             @empty
                                 <tr>

@@ -96,11 +96,11 @@
                         </td>
 
                         <td class="text-end fw-semibold text-primary">
-                            {{ number_format($invoice->total, 2) }} ج.م
+                            {{ number_format($invoice->total, 2) }} ر.س
                         </td>
 
                         <td class="text-end fw-semibold text-success">
-                            {{ number_format($invoice->profit, 2) }} ج.م
+                            {{ number_format($invoice->profit, 2) }} ر.س
                         </td>
 
                         <td class="text-center">

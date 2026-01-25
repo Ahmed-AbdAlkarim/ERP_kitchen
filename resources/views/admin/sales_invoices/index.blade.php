@@ -65,7 +65,7 @@
                                     <td class="fw-bold">{{ $invoice->invoice_number }}</td>
                                     <td>{{ $invoice->invoice_date->format('d/m/Y') }}</td>
                                     <td>{{ $invoice->customer->name ?? '-' }}</td>
-                                    <td class="fw-bold text-success">{{ number_format($invoice->total, 2) }} ج.م</td>
+                                    <td class="fw-bold text-success">{{ number_format($invoice->total, 2) }} ر.س</td>
                                     <td>
                                         @switch($invoice->status)
                                             @case('paid')

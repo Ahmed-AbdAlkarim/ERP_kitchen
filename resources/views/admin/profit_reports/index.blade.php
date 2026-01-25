@@ -43,7 +43,7 @@
                 <div class="card-body text-center">
                     <i class="fas fa-shopping-cart fa-2x mb-3"></i>
                     <h5 class="card-title">إجمالي المبيعات</h5>
-                    <h3 class="fw-bold">{{ number_format($totalSales, 2) }} ج.م</h3>
+                    <h3 class="fw-bold">{{ number_format($totalSales, 2) }} ر.س</h3>
                 </div>  
             </div>
         </div>
@@ -53,7 +53,7 @@
                     <div class="card-body text-center">
                         <i class="fas fa-dollar-sign fa-2x mb-3"></i>
                         <h5 class="card-title">إجمالي أرباح المبيعات</h5>
-                        <h3 class="fw-bold">{{ number_format($totalSalesProfit, 2) }} ج.م</h3>
+                        <h3 class="fw-bold">{{ number_format($totalSalesProfit, 2) }} ر.س</h3>
                     </div>
                 </div>
             </a>
@@ -64,9 +64,9 @@
                     <div class="card-body text-center">
                         <i class="fas fa-minus-circle fa-2x mb-3"></i>
                         <h5 class="card-title">إجمالي المصاريف</h5>
-                        <h3 class="fw-bold">{{ number_format($totalExpenses, 2) }} ج.م</h3>
-                        <small>مصاريف الشراء: {{ number_format($purchaseExpenses ?? 0, 2) }} ج.م</small><br>
-                        <small>مصاريف عامة: {{ number_format($generalExpenses ?? 0, 2) }} ج.م</small>
+                        <h3 class="fw-bold">{{ number_format($totalExpenses, 2) }} ر.س</h3>
+                        <small>مصاريف الشراء: {{ number_format($purchaseExpenses ?? 0, 2) }} ر.س</small><br>
+                        <small>مصاريف عامة: {{ number_format($generalExpenses ?? 0, 2) }} ر.س</small>
                     </div>
                 </div>
             </a>
@@ -97,7 +97,7 @@
                 <div class="card-body text-center">
                     <i class="fas fa-chart-pie fa-2x mb-3"></i>
                     <h5 class="card-title">صافي الربح</h5>
-                    <h3 class="fw-bold">{{ number_format($netProfit, 2) }} ج.م</h3>
+                    <h3 class="fw-bold">{{ number_format($netProfit, 2) }} ر.س</h3>
                 </div>
             </div>
         </div>

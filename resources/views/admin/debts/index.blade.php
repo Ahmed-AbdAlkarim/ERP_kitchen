@@ -50,7 +50,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body text-center">
                     <h6 class="text-muted mb-2">إجمالي مديونيات الموردين</h6>
-                    <h4 class="text-danger mb-0">{{ number_format($totalSupplierDebts, 2) }} ج.م</h4>
+                    <h4 class="text-danger mb-0">{{ number_format($totalSupplierDebts, 2) }} ر.س</h4>
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body text-center">
                     <h6 class="text-muted mb-2">إجمالي مديونيات العملاء</h6>
-                    <h4 class="text-success mb-0">{{ number_format($totalCustomerDebts, 2) }} ج.م</h4>
+                    <h4 class="text-success mb-0">{{ number_format($totalCustomerDebts, 2) }} ر.س</h4>
                 </div>
             </div>
         </div>
@@ -87,7 +87,7 @@
                             @endphp
                             <tr>
                                 <td class="fw-bold">{{ $supplier->name }}</td>
-                                <td class="fw-bold text-danger">{{ number_format($totalDebt, 2) }} ج.م</td>
+                                <td class="fw-bold text-danger">{{ number_format($totalDebt, 2) }} ر.س</td>
                                 <td>
                                     <button onclick="openSupplierPaymentModal({{ $supplier->id }}, '{{ $supplier->name }}', {{ $totalDebt }})"
                                             class="btn btn-primary btn-sm">
@@ -132,7 +132,7 @@
                             @endphp
                             <tr>
                                 <td class="fw-bold">{{ $customer->name }}</td>
-                                <td class="fw-bold text-success">{{ number_format($totalDebt, 2) }} ج.م</td>
+                                <td class="fw-bold text-success">{{ number_format($totalDebt, 2) }} ر.س</td>
                                 <td>
                                     <button onclick="openCustomerPaymentModal({{ $customer->id }}, '{{ $customer->name }}', {{ $totalDebt }})"
                                             class="btn btn-success btn-sm">
@@ -175,7 +175,7 @@
                         <label for="cashbox_id" class="form-label">الخزنة:</label>
                         <select name="cashbox_id" class="form-select" required>
                             @foreach($cashboxes as $cashbox)
-                                <option value="{{ $cashbox->id }}">{{ $cashbox->name }} (رصيد: {{ number_format($cashbox->balance, 2) }} ج.م)</option>
+                                <option value="{{ $cashbox->id }}">{{ $cashbox->name }} (رصيد: {{ number_format($cashbox->balance, 2) }} ر.س)</option>
                             @endforeach
                         </select>
                     </div>
@@ -213,7 +213,7 @@
                         <label for="cashbox_id" class="form-label">الخزنة اليومية:</label>
                         <select name="cashbox_id" class="form-select" required>
                             @foreach($dailyCashboxes as $cashbox)
-                                <option value="{{ $cashbox->id }}">{{ $cashbox->name }} (رصيد: {{ number_format($cashbox->balance, 2) }} ج.م)</option>
+                                <option value="{{ $cashbox->id }}">{{ $cashbox->name }} (رصيد: {{ number_format($cashbox->balance, 2) }} ر.س)</option>
                             @endforeach
                         </select>
                     </div>

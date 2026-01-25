@@ -70,7 +70,7 @@
                                 @if(auth()->user()->can('show_supplier_debts'))
                                 <td class="fw-bold text-danger">
                                     @can('show_supplier_debts')
-                                    {{ number_format($supplier->debt, 2) }} ج.م
+                                    {{ number_format($supplier->debt, 2) }} ر.س
                                     @endcan
                                 </td>
                                 @endif

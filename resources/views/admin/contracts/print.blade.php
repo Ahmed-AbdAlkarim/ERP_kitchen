@@ -40,9 +40,13 @@
 
         .mb-10 { margin-bottom: 10px; }
         .mb-20 { margin-bottom: 20px; }
+        .terms { font-size: 12px; }
 
         @media print {
             .no-print { display: none; }
+            body { margin: 0; padding: 10px; }
+            * { page-break-inside: avoid; }
+            @page { size: A4; margin: 0.5cm; }
         }
     </style>
 </head>
@@ -53,10 +57,10 @@
 </div>
 
 {{-- العنوان --}}
-<h2 class="text-center mb-20">عقد اتفاق</h2>
+<h2 class="text-center mb-10">عقد اتفاق</h2>
 
 {{-- بيانات الشركة --}}
-<table class="no-border mb-20">
+<table class="no-border mb-10">
     <tr>
         <td><strong>اسم الشركة:</strong> كيتشن ميتر للمطابخ</td>
         <td><strong>العنوان:</strong> الرياض - الشفا - بدر</td>
@@ -68,7 +72,7 @@
 </table>
 
 {{-- بيانات العقد --}}
-<table class="no-border mb-20">
+<table class="no-border mb-10">
     <tr>
         <td>
             <strong>رقم العقد:</strong>
@@ -97,34 +101,78 @@
 
 {{-- تفاصيل العقد --}}
 <h3 class="mb-10">تفاصيل العقد</h3>
-<table class="mb-20">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>البند</th>
-            <th>التفاصيل</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($contract->details as $detail)
+@php
+    $details = $contract->details;
+    $mid = ceil($details->count() / 2);
+    $firstHalf = $details->take($mid);
+    $secondHalf = $details->skip($mid);
+@endphp
+<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+    <table style="width: 48%;">
+        <thead>
             <tr>
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $detail->title }}</td>
-                <td>{{ $detail->value }}</td>
+                <th>#</th>
+                <th>البند</th>
+                <th>التفاصيل</th>
             </tr>
-        @endforeach
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach($firstHalf as $detail)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $detail->title }}</td>
+                    <td>{{ $detail->value }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+    <table style="width: 48%;">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>البند</th>
+                <th>التفاصيل</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($secondHalf as $detail)
+                <tr>
+                    <td>{{ $loop->iteration + $mid }}</td>
+                    <td>{{ $detail->title }}</td>
+                    <td>{{ $detail->value }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
 
 {{-- الشروط والأحكام --}}
 @if($terms->count())
     <h3 class="mb-10">الشروط والأحكام</h3>
-    <ol>
+    <ol class="terms">
         @foreach($terms as $term)
             <li>{{ $term->term }}</li>
         @endforeach
     </ol>
 @endif
+
+{{-- توقيعات --}}
+<div style="margin-top: 50px;">
+    <table class="no-border" style="width: 100%;">
+        <tr>
+            <td style="width: 50%; text-align: center;">
+                <strong>توقيع العميل</strong><br>
+                {{ $contract->customer->name }}<br>
+                ____________________
+            </td>
+            <td style="width: 50%; text-align: center;">
+                <strong>توقيع الموظف المسؤول</strong><br>
+                {{ $contract->quotation->createdBy->name ?? 'غير محدد' }}<br>
+                ____________________
+            </td>
+        </tr>
+    </table>
+</div>
 
 <script>
     window.onload = function () {

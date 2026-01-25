@@ -18,7 +18,7 @@
                     <td>{{ $expenses->firstItem() + $index }}</td>
                     <td>{{ $expense->title }}</td>
                     <td>{{ ucfirst(str_replace('_',' ', $expense->category)) }}</td>
-                    <td>{{ number_format($expense->amount,2) }} ج.م</td>
+                    <td>{{ number_format($expense->amount,2) }} ر.س</td>
                     <td>{{ $expense->cashbox?->name ?? 'غير محدد' }}</td>
                     <td>{{ $expense->expense_date->format('Y-m-d') }}</td>
                     <td>

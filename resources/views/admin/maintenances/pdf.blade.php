@@ -94,7 +94,7 @@
                     </tr>
                     <tr>
                         <td class="label">التكلفة:</td>
-                        <td>{{ number_format($maintenance->cost, 2) }} ج.م</td>
+                        <td>{{ number_format($maintenance->cost, 2) }} ر.س</td>
                     </tr>
                     <tr>
                         <td class="label">تاريخ التسليم:</td>
@@ -155,7 +155,7 @@
                     </tr>
                     <tr>
                         <td class="label">التكلفة:</td>
-                        <td>{{ number_format($maintenance->cost, 2) }} ج.م</td>
+                        <td>{{ number_format($maintenance->cost, 2) }} ر.س</td>
                     </tr>
                     <tr>
                         <td class="label">تاريخ التسليم:</td>

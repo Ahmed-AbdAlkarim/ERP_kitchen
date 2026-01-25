@@ -90,7 +90,7 @@
                                 </td>
 
                                 {{-- السعر --}}
-                                <td>{{ number_format($p->selling_price, 2) }} ج.م</td>
+                                <td>{{ number_format($p->selling_price, 2) }} ر.س</td>
 
                                 {{-- الإجراءات --}}
                                 <td>

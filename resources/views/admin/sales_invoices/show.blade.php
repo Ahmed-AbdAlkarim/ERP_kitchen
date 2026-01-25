@@ -38,36 +38,50 @@
 
     <div class="mt-3 text-end">
 
-        <p>المجموع:
-            <strong>{{ number_format($invoice->subtotal, 2) }} ج.م</strong>
+        @php
+            $tax = $invoice->total - ($invoice->subtotal - $invoice->discount);
+        @endphp
+
+        <p>قبل الضريبة:
+            <strong>{{ number_format($invoice->subtotal, 2) }} ر.س</strong>
         </p>
 
         <p>الخصم:
-            <strong>{{ number_format($invoice->discount, 2) }} ج.م</strong>
+            <strong>{{ number_format($invoice->discount, 2) }} ر.س</strong>
         </p>
 
-        <p>الإجمالي بعد الخصم:
-            <strong>{{ number_format($invoice->total, 2) }} ج.م</strong>
+        <p>الضريبة:
+            <strong>{{ number_format($tax, 2) }} ر.س</strong>
         </p>
+
+        <hr>
+
+        <p class="fw-bold">
+            الإجمالي:
+            <strong class="text-success">
+                {{ number_format($invoice->total, 2) }} ر.س
+            </strong>
+        </p>
+
 
         <hr>
 
         <p>المبلغ المدفوع:
             <strong class="text-primary">
-                {{ number_format($invoice->paid_amount ?? 0, 2) }} ج.م
+                {{ number_format($invoice->paid_amount ?? 0, 2) }} ر.س
             </strong>
         </p>
 
         <p>المبلغ المتبقي:
             <strong class="text-danger">
-                {{ number_format($invoice->remaining_amount ?? 0, 2) }} ج.م
+                {{ number_format($invoice->remaining_amount ?? 0, 2) }} ر.س
             </strong>
         </p>
 
         <hr>
         @can('show_sales_invoice_profit')
         <p>الربح:
-            <strong>{{ number_format($invoice->profit, 2) }} ج.م</strong>
+            <strong>{{ number_format($invoice->profit, 2) }} ر.س</strong>
         </p>
         @endcan
 

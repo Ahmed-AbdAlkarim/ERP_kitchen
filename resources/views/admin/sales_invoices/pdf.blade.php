@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>فاتورة - Click Store</title>
+<title>فاتورة - كيتشن ميتر للمطابخ </title>
 
 <style>
 * {
@@ -151,7 +151,7 @@ tbody tr:nth-child(even) {
 
   <!-- Header -->
   <div class="header">
-    <div class="logo">Click Store</div>
+    <div class="logo">كيتشن ميتر للمطابخ</div>
     <div class="invoice-title">فاتورة بيع</div>
   </div>
 
@@ -203,17 +203,29 @@ tbody tr:nth-child(even) {
         <th>المنتج</th>
         <th>الكمية</th>
         <th>سعر الوحدة</th>
+        <th>الضريبة</th>
         <th>الإجمالي</th>
       </tr>
     </thead>
+    @php
+        $taxRate = 0.15;
+        $totalTax = 0;
+    @endphp
     <tbody>
       @foreach($invoice->items as $item)
-      <tr>
-        <td>{{ $item->product->name ?? '-' }}</td>
-        <td>{{ $item->qty }}</td>
-        <td>{{ number_format($item->price,2) }} ج.م</td>
-        <td>{{ number_format($item->total,2) }} ج.م</td>
-      </tr>
+        @php
+            $lineSubtotal = $item->qty * $item->price;
+            $lineTax = $lineSubtotal * $taxRate;
+            $totalTax += $lineTax;
+        @endphp
+
+        <tr>
+            <td>{{ $item->product->name }}</td>
+            <td>{{ $item->qty }}</td>
+            <td>{{ number_format($item->price, 2) }}</td>
+            <td>{{ number_format($lineTax, 2) }}</td>
+            <td>{{ number_format($lineSubtotal, 2) }}</td>
+        </tr>
       @endforeach
     </tbody>
   </table>
@@ -222,30 +234,35 @@ tbody tr:nth-child(even) {
   <div class="totals">
     <div class="total-row">
       <span>المجموع الفرعي</span>
-      <span>{{ number_format($invoice->subtotal ?? 0,2) }} ج.م</span>
+      <span>{{ number_format($invoice->subtotal ?? 0,2) }} ر.س</span>
+    </div>
+    <div>
+      <div class="total-row">
+        <span>الضريبة</span>
+        <span>{{ number_format($totalTax,2) }} ر.س</span>
+      </div>
     </div>
     <div class="total-row">
       <span>الخصم</span>
-      <span>- {{ number_format($invoice->discount ?? 0,2) }} ج.م</span>
+      <span>- {{ number_format($invoice->discount ?? 0,2) }} ر.س</span>
     </div>
     <div class="total-row final">
       <span>الإجمالي النهائي</span>
-      <span>{{ number_format($invoice->total ?? 0,2) }} ج.م</span>
+      <span>{{ number_format($invoice->total ?? 0,2) }} ر.س</span>
     </div>
     <div class="total-row">
       <span>المدفوع</span>
-      <span>{{ number_format($invoice->paid_amount ?? 0,2) }} ج.م</span>
+      <span>{{ number_format($invoice->paid_amount ?? 0,2) }} ر.س</span>
     </div>
     <div class="total-row">
       <span>المتبقي</span>
       <span>
-        {{ number_format($invoice->remaining_amount ?? ($invoice->total - ($invoice->paid_amount ?? 0)),2) }} ج.م
+        {{ number_format($invoice->remaining_amount ?? ($invoice->total - ($invoice->paid_amount ?? 0)),2) }} ر.س
       </span>
     </div>
   </div>
 
-  <!-- Footer inside page -->
-  <div class="page-footer-name">Click Store</div>
+
 
 </div>
 
