@@ -1,0 +1,3 @@
+- [x] Update create.blade.php to include subtotal, discount, and total fields in the totals section.
+- [x] Update JavaScript in create.blade.php to calculate subtotal as sum of items, and total = subtotal - discount.
+- [x] Make customer field similar to product field with datalist for searching by name or phone, displaying name only.

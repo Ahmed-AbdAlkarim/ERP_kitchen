@@ -1,0 +1,286 @@
+@extends('layouts.master')
+
+@section('title', 'الخزن')
+
+@section('content')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<div class="container-fluid my-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 text-primary">الخزن</h1>
+            <p class="text-muted mb-0">إدارة الخزن والمعاملات المالية</p>
+        </div>
+        <div>
+            <a href="{{ route('admin.cashboxes.create') }}" class="btn btn-success">
+                <i class="fas fa-plus me-2"></i>إضافة خزنة جديدة
+            </a>
+            <a href="{{ route('admin.cashboxes.transfer.form') }}" class="btn btn-primary ms-2">
+                <i class="fas fa-exchange-alt me-2"></i>تحويل أموال
+            </a>
+
+            <button class="btn btn-success ms-2" data-bs-toggle="modal" data-bs-target="#receiveCustomerCash">
+                <i class="fas fa-hand-holding-usd me-2"></i>استلام نقدية من عميل
+            </button>
+
+
+            <a href="{{ route('admin.cashboxes.transactions') }}" class="btn btn-secondary ms-2">
+                <i class="fas fa-list me-2"></i>عرض جميع العمليات
+            </a>
+        </div>
+    </div>
+
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @php
+        $totalBalance = 0;
+        foreach ($mainCashboxes as $cashbox) {
+            $totalBalance += $cashbox->balance;
+        }
+        foreach ($dailyCashboxes as $cashbox) {
+            $totalBalance += $cashbox->balance;
+        }
+    @endphp
+
+    <!-- كارت إجمالي المبالغ -->
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 text-primary">
+                <i class="fas fa-calculator me-2"></i>إجمالي المبالغ في الخزن
+            </h5>
+        </div>
+        <div class="card-body">
+            <h3 class="text-success fw-bold">{{ number_format($totalBalance, 2) }} ج.م</h3>
+            <p class="text-muted mb-0">مجموع أرصدة الخزن الرئيسية واليومية</p>
+        </div>
+    </div>
+
+    <!-- الخزن الرئيسية -->
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 text-primary">
+                <i class="fas fa-building me-2"></i>الخزن الرئيسية
+            </h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="border-0">#</th>
+                            <th class="border-0">اسم الخزنة</th>
+                            <th class="border-0">الرصيد الحالي</th>
+                            <th class="border-0">الحالة</th>
+                            <th class="border-0">الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($mainCashboxes as $cashbox)
+                        <tr>
+                            <td>{{ $cashbox->id }}</td>
+                            <td class="fw-bold">{{ $cashbox->name }}</td>
+                            <td class="fw-bold text-success">{{ number_format($cashbox->balance, 2) }} ج.م</td>
+                            <td>
+                                @if($cashbox->is_active)
+                                    <span class="badge bg-success">نشط</span>
+                                @else
+                                    <span class="badge bg-danger">معطل</span>
+                                @endif
+                            </td>
+                            <td>
+                                <a href="{{ route('admin.cashboxes.show', $cashbox->id) }}" class="btn btn-info btn-sm me-1">
+                                    <i class="fas fa-eye"></i> عرض
+                                </a>
+                                <a href="{{ route('admin.cashboxes.edit', $cashbox->id) }}" class="btn btn-warning btn-sm me-1">
+                                    <i class="fas fa-edit"></i> تعديل
+                                </a>
+                                <form action="{{ route('admin.cashboxes.destroy', $cashbox->id) }}" method="POST" style="display:inline-block">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button onclick="return confirm('هل أنت متأكد من حذف هذه الخزنة؟')" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash"></i> حذف
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-muted">
+                                <i class="fas fa-inbox fa-2x mb-2"></i>
+                                <br>لا توجد خزن رئيسية متاحة
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- الخزن اليومية -->
+    <div class="card border-0 shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 text-info">
+                <i class="fas fa-calendar-day me-2"></i>الخزن اليومية
+            </h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="border-0">#</th>
+                            <th class="border-0">اسم الخزنة</th>
+                            <th class="border-0">الرصيد الحالي</th>
+                            <th class="border-0">الحالة</th>
+                            <th class="border-0">الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($dailyCashboxes as $cashbox)
+                        <tr>
+                            <td>{{ $cashbox->id }}</td>
+                            <td class="fw-bold">{{ $cashbox->name }}</td>
+                            <td class="fw-bold text-success">{{ number_format($cashbox->balance, 2) }} ج.م</td>
+                            <td>
+                                @if($cashbox->is_active)
+                                    <span class="badge bg-success">نشط</span>
+                                @else
+                                    <span class="badge bg-danger">معطل</span>
+                                @endif
+                            </td>
+                            <td>
+                                <a href="{{ route('admin.cashboxes.show', $cashbox->id) }}" class="btn btn-info btn-sm me-1">
+                                    <i class="fas fa-eye"></i> عرض
+                                </a>
+                                <a href="{{ route('admin.cashboxes.edit', $cashbox->id) }}" class="btn btn-warning btn-sm me-1">
+                                    <i class="fas fa-edit"></i> تعديل
+                                </a>
+                                <form action="{{ route('admin.cashboxes.destroy', $cashbox->id) }}" method="POST" style="display:inline-block">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button onclick="return confirm('هل أنت متأكد من حذف هذه الخزنة؟')" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash"></i> حذف
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-muted">
+                                <i class="fas fa-inbox fa-2x mb-2"></i>
+                                <br>لا توجد خزن يومية متاحة
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="receiveCustomerCash" tabindex="-1">
+    <div class="modal-dialog">
+        <form action="{{ route('admin.cashboxes.receive_from_customer') }}" method="POST">
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">استلام نقدية من عميل</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label>العميل</label>
+                        <input type="text" list="customers" class="form-control customer-name" placeholder="ابحث هنا" required>
+                        <input type="hidden" name="customer_id" class="customer-id">
+                    </div>
+
+                    <div class="mb-3">
+                        <label>الخزنة</label>
+                        <select name="cashbox_id" class="form-control" required>
+                            @foreach($mainCashboxes->merge($dailyCashboxes) as $cashbox)
+                                <option value="{{ $cashbox->id }}">{{ $cashbox->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>المبلغ</label>
+                        <input type="number" step="0.01" name="amount" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>ملاحظة</label>
+                        <textarea name="note" class="form-control"></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                    <button class="btn btn-success">تأكيد الاستلام</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{{-- العملاء --}}
+<datalist id="customers">
+@foreach(\App\Models\Customer::all() as $customer)
+    <option
+        value="{{ $customer->name }}"
+        data-id="{{ $customer->id }}"
+        data-balance="{{ $customer->balance }}"
+        data-phone="{{ $customer->phone }}">
+    </option>
+@endforeach
+</datalist>
+
+<script>
+/* ================= العميل ================= */
+$(document).on('input', '.customer-name', function () {
+    let val = $(this).val();
+    let option = $('#customers option').filter(function () {
+        return this.value === val;
+    }).first();
+
+    if (option.length > 0) {
+        // Matched name
+        $(this).closest('.mb-3').find('.customer-id').val(option.data('id') || '');
+    } else {
+        // Check if it's a phone
+        let phoneOption = $('#customers option').filter(function () {
+            return $(this).data('phone') === val;
+        }).first();
+
+        if (phoneOption.length > 0) {
+            // Found by phone, set to name
+            $(this).val(phoneOption.val());
+            $(this).closest('.mb-3').find('.customer-id').val(phoneOption.data('id') || '');
+        } else {
+            // No match, clear
+            $(this).closest('.mb-3').find('.customer-id').val('');
+        }
+    }
+});
+</script>
+
+@endsection
