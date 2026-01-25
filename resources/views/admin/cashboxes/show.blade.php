@@ -64,6 +64,7 @@
                             <th class="border-0">المستخدم</th>
                             <th class="border-0">الوحدة</th>
                             <th class="border-0">ملاحظة</th>
+                            <th>إجراء</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -94,6 +95,19 @@
                                 </span>
                             </td>
                             <td>{{ $transaction->note }}</td>
+                            <td>
+                                @if(
+                                    $transaction->type == 'in' &&
+                                    in_array($transaction->module, ['customer_payment','sales_invoice'])
+                                )
+                                    <a href="{{ route('admin.cashbox.receipt', $transaction) }}"
+                                    class="btn btn-sm btn-outline-primary"
+                                    target="_blank">
+                                        <i class="fas fa-print"></i>
+                                    </a>
+                                @endif
+                            </td>
+
                         </tr>
                         @empty
                         <tr>

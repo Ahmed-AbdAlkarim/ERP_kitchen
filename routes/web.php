@@ -462,6 +462,12 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         ->name('cashboxes.transfer');
         
         Route::resource('cashboxes', CashboxController::class);
+
+        Route::get(
+            'cashbox-transactions/{transaction}/receipt',
+            [\App\Http\Controllers\Admin\CashboxReceiptController::class, 'print']
+        )->name('cashbox.receipt');
+
     });
 
     /* =========================
