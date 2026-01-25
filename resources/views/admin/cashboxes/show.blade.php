@@ -25,7 +25,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body text-center">
                     <h5 class="card-title text-primary">الرصيد الحالي</h5>
-                    <h2 class="mb-0">{{ number_format($cashbox->balance, 2) }} ج.م</h2>
+                    <h2 class="mb-0">{{ number_format($cashbox->balance, 2) }} ر.س</h2>
                 </div>
             </div>
         </div>
@@ -33,7 +33,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body text-center">
                     <h5 class="card-title text-success">إجمالي الوارد</h5>
-                    <h4 class="mb-0">{{ number_format($cashbox->transactions()->where('type', 'in')->sum('amount'), 2) }} ج.م</h4>
+                    <h4 class="mb-0">{{ number_format($cashbox->transactions()->where('type', 'in')->sum('amount'), 2) }} ر.س</h4>
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body text-center">
                     <h5 class="card-title text-danger">إجمالي الصادر</h5>
-                    <h4 class="mb-0">{{ number_format($cashbox->transactions()->where('type', 'out')->sum('amount'), 2) }} ج.م</h4>
+                    <h4 class="mb-0">{{ number_format($cashbox->transactions()->where('type', 'out')->sum('amount'), 2) }} ر.س</h4>
                 </div>
             </div>
         </div>
@@ -78,7 +78,7 @@
                                     <span class="badge bg-danger">صادر</span>
                                 @endif
                             </td>
-                            <td class="fw-bold">{{ number_format($transaction->amount, 2) }} ج.م</td>
+                            <td class="fw-bold">{{ number_format($transaction->amount, 2) }} ر.س</td>
                             <td>{{ $transaction->user->name ?? '—'}}</td>
                             <td>
                                 <span class="badge

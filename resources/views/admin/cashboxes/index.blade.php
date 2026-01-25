@@ -65,7 +65,7 @@
             </h5>
         </div>
         <div class="card-body">
-            <h3 class="text-success fw-bold">{{ number_format($totalBalance, 2) }} ج.م</h3>
+            <h3 class="text-success fw-bold">{{ number_format($totalBalance, 2) }} ر.س</h3>
             <p class="text-muted mb-0">مجموع أرصدة الخزن الرئيسية واليومية</p>
         </div>
     </div>
@@ -94,7 +94,7 @@
                         <tr>
                             <td>{{ $cashbox->id }}</td>
                             <td class="fw-bold">{{ $cashbox->name }}</td>
-                            <td class="fw-bold text-success">{{ number_format($cashbox->balance, 2) }} ج.م</td>
+                            <td class="fw-bold text-success">{{ number_format($cashbox->balance, 2) }} ر.س</td>
                             <td>
                                 @if($cashbox->is_active)
                                     <span class="badge bg-success">نشط</span>
@@ -156,7 +156,7 @@
                         <tr>
                             <td>{{ $cashbox->id }}</td>
                             <td class="fw-bold">{{ $cashbox->name }}</td>
-                            <td class="fw-bold text-success">{{ number_format($cashbox->balance, 2) }} ج.م</td>
+                            <td class="fw-bold text-success">{{ number_format($cashbox->balance, 2) }} ر.س</td>
                             <td>
                                 @if($cashbox->is_active)
                                     <span class="badge bg-success">نشط</span>

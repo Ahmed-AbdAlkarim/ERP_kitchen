@@ -33,7 +33,7 @@
                                     <option value="">اختر الخزنة المصدر</option>
                                     @foreach($cashboxes as $cashbox)
                                         <option value="{{ $cashbox->id }}" {{ old('from_cashbox') == $cashbox->id ? 'selected' : '' }}>
-                                            {{ $cashbox->name }} ({{ number_format($cashbox->balance, 2) }} ج.م)
+                                            {{ $cashbox->name }} ({{ number_format($cashbox->balance, 2) }} ر.س)
                                         </option>
                                     @endforeach
                                 </select>
@@ -48,7 +48,7 @@
                                     <option value="">اختر الخزنة المستهدفة</option>
                                     @foreach($cashboxes as $cashbox)
                                         <option value="{{ $cashbox->id }}" {{ old('to_cashbox') == $cashbox->id ? 'selected' : '' }}>
-                                            {{ $cashbox->name }} ({{ number_format($cashbox->balance, 2) }} ج.م)
+                                            {{ $cashbox->name }} ({{ number_format($cashbox->balance, 2) }} ر.س)
                                         </option>
                                     @endforeach
                                 </select>

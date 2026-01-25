@@ -32,7 +32,7 @@
                                     <span class="badge bg-danger">سحب</span>
                                 @endif
                             </td>
-                            <td>{{ number_format($tran->amount, 2) }} ج.م</td>
+                            <td>{{ number_format($tran->amount, 2) }} ر.س</td>
                             <td>{{ $tran->date }}</td>
                             <td>{{ $tran->note ?? '-' }}</td>
                         </tr>
