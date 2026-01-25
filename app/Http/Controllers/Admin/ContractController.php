@@ -42,7 +42,7 @@ class ContractController extends Controller
     {
         $request->validate([
             'customer_id'   => 'required|exists:customers,id',
-            'quotation_id'  => 'required|exists:quotations,id',
+            'quotation_id'  => 'nullable|exists:quotations,id',
             'delivery_date' => 'required|date',
         ]);
 

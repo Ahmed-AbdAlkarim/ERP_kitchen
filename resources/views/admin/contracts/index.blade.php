@@ -31,9 +31,15 @@
                         <td>{{ $contract->id }}</td>
                         <td>{{ $contract->customer->name }}</td>
                         <td>
-                            {{ $contract->quotation->quotation_number ?? 
-                            'QT-' . $contract->quotation->created_at->format('Y') . '-' . str_pad($contract->quotation->id, 4, '0', STR_PAD_LEFT)
-                            }}
+                            @if($contract->quotation)
+                                {{ $contract->quotation->quotation_number
+                                    ?? 'QT-' . $contract->quotation->created_at->format('Y')
+                                    . '-' . str_pad($contract->quotation->id, 4, '0', STR_PAD_LEFT)
+                                }}
+                            @else
+                                <span class="badge bg-secondary">بدون عرض سعر</span>
+                            @endif
+
                         </td>
                         <td>{{ $contract->delivery_date }}</td>
                         <td>

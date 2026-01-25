@@ -19,10 +19,17 @@
 <p><strong>العميل:</strong> {{ $contract->customer->name }}</p>
 <p>
     <strong>عرض السعر:</strong>
-    {{ $contract->quotation->quotation_number
-        ?? 'QT-' . $contract->quotation->created_at->format('Y') . '-' . str_pad($contract->quotation->id, 4, '0', STR_PAD_LEFT)
-    }}
+
+    @if($contract->quotation)
+        {{ $contract->quotation->quotation_number
+            ?? 'QT-' . $contract->quotation->created_at->format('Y')
+            . '-' . str_pad($contract->quotation->id, 4, '0', STR_PAD_LEFT)
+        }}
+    @else
+        بدون عرض سعر
+    @endif
 </p>
+
 <p><strong>تاريخ التسليم:</strong> {{ $contract->delivery_date }}</p>
 </div>
 </div>
@@ -30,16 +37,27 @@
 <div class="card mb-4">
 <div class="card-header">تفاصيل العقد</div>
 <div class="card-body">
+
 <table class="table table-bordered">
-@foreach($contract->details as $detail)
+@foreach($contract->details->chunk(2) as $chunk)
 <tr>
-    <th width="30%">{{ $detail->title }}</th>
-    <td>{{ $detail->value }}</td>
+    @foreach($chunk as $detail)
+        <th width="20%">{{ $detail->title }}</th>
+        <td width="30%">{{ $detail->value }}</td>
+    @endforeach
+
+    {{-- لو العدد فردي نكمّل الصف --}}
+    @if($chunk->count() < 2)
+        <th></th>
+        <td></td>
+    @endif
 </tr>
 @endforeach
 </table>
+
 </div>
 </div>
+
 
 <div class="card">
 <div class="card-header">الشروط والأحكام</div>

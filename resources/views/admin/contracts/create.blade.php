@@ -32,8 +32,7 @@
 <label class="form-label">عرض السعر</label>
 <select name="quotation_id"
         id="quotationSelect"
-        class="form-select"
-        required>
+        class="form-select">
     <option value="">اختر العميل أولًا</option>
 </select>
 </div>
