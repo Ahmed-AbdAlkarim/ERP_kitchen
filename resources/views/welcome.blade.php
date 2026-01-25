@@ -132,7 +132,7 @@
    </main><!-- Footer -->
    <footer class="glass-effect border-t border-white/20 mt-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-     <p class="text-center text-white/70 text-sm">©Made with ❤️ by <a href="https://www.facebook.com/share/1G8MceLtjR/" target="_blank" class="fw-semibold">Ahmed Abd-Alkarim 2026</a></p>
+     <p class="text-center text-white/70 text-sm">©Made with ❤️ by <a href="https://erp.clickstoreeg.com" target="_blank" class="fw-semibold">Click Solutions</a></p>
     </div>
    </footer>
   </div>

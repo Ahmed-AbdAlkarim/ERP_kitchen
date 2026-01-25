@@ -237,15 +237,7 @@
     </li>
     @endcan
 
-    @can('view_permission')
-    <!-- Permissions Management -->
-    <li class="menu-item {{ request()->is('admin/permissions*') ? 'active' : '' }}">
-      <a href="{{ route('admin.permissions.index') }}" class="menu-link">
-        <i class="menu-icon tf-icons ti ti-key"></i>
-        <div>إدارة الصلاحيات</div>
-      </a>
-    </li>
-    @endcan
+ 
 
 
   </ul>

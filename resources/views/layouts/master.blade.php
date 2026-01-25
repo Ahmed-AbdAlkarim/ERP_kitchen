@@ -95,7 +95,7 @@
                     <script>
                       document.write(new Date().getFullYear());
                     </script>
-                    , made with ❤️ by <a href="https://www.facebook.com/share/1G8MceLtjR/" target="_blank" class="fw-semibold">Ahmed Abd-Alkarim</a>
+                    , made with ❤️ by <a href="https://erp.clickstoreeg.com" target="_blank" class="fw-semibold">Click Solutions</a>
                   </div>
                   <div>
                     
