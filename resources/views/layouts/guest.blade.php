@@ -1,30 +1,130 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'نظام ERP') }}</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
-            <div>
-                <a href="/" wire:navigate>
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                </a>
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <style>
+        * { font-family: 'Tajawal', sans-serif; }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .card-hover {
+            transition: transform .3s ease, box-shadow .3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 45px rgba(0,0,0,.35);
+        }
+
+        .input-field:focus {
+            border-color: #a78bfa;
+            box-shadow: 0 0 0 3px rgba(167,139,250,.25);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        /* Logo sizing */
+        .login-logo {
+            height: 40px;
+            width: auto;
+        }
+
+        @media (max-width: 768px) {
+            .login-logo {
+                height: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col gradient-bg">
+
+<!-- ================= Header ================= -->
+<header class="glass-effect border-b border-white/20">
+    <div class="max-w-7xl mx-auto h-16 px-6 flex items-center justify-between">
+
+        <!-- Left: Logo -->
+        <a
+            href="https://erp.clickstoreeg.com"
+            target="_blank"
+            class="flex items-center gap-3"
+        >
+            <img
+                src="{{ asset('assets/img/logowhite.png') }}"
+                alt="Click Solutions Logo"
+                class="login-logo"
+            >
+
+            <div class="leading-tight">
+                <h1 class="text-base font-extrabold text-white">
+                    Meter for Kitchens
+                </h1>
+                <p class="text-[11px] text-white/70">
+                    ERP System for Kitchen Factories
+                </p>
             </div>
+        </a>
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
-                {{ $slot }}
-            </div>
-        </div>
-    </body>
+        <!-- Right: Click Solutions -->
+        <a
+            href="https://erp.clickstoreeg.com"
+            target="_blank"
+            class="text-base font-extrabold text-white
+                   tracking-wide hover:opacity-90 transition"
+        >
+            Click Solutions
+        </a>
+
+    </div>
+</header>
+
+<!-- ================= Main ================= -->
+<main class="flex-1 flex items-center justify-center px-4">
+
+    <!-- Login Card -->
+    <div
+        class="glass-effect card-hover rounded-2xl shadow-2xl"
+        style="width:100%; max-width:380px; padding:28px;"
+    >
+        {{ $slot }}
+    </div>
+
+</main>
+
+<!-- ================= Footer ================= -->
+<footer class="glass-effect border-t border-white/20 text-center py-4 mt-auto">
+    <p class="text-white/70 text-sm">
+        © Made with ❤️ by
+        <a
+            href="https://erp.clickstoreeg.com"
+            target="_blank"
+            class="font-semibold underline hover:text-white"
+        >
+            Click Solutions
+        </a>
+    </p>
+</footer>
+
+</body>
 </html>

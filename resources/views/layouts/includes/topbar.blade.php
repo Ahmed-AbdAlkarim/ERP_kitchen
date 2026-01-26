@@ -1,98 +1,115 @@
 <!-- Navbar -->
 <style>
-    .navbar-logo {
-        max-height: 40px;
-        width: auto;
-        object-fit: contain;
+    .navbar-brand-text {
+        font-size: 20px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        color: #7367F0; /* نفس ألوان الثيم */
+        text-transform: capitalize;
+        white-space: nowrap;
+    }
+
+    @media (max-width: 768px) {
+        .navbar-brand-text {
+            font-size: 17px;
         }
-
-        @media (max-width: 768px) {
-            .navbar-logo {
-                max-height: 32px;
-            }
-        }
-
-
+    }
 </style>
-    <nav
-            class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
-            id="layout-navbar">
-            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-                <i class="ti ti-menu-2 ti-sm"></i>
-              </a>
-            </div>
 
-            <div class="container">
-                
+<nav
+    class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+    id="layout-navbar">
 
-                <a class="navbar-brand ms-4 d-flex align-items-center" href="{{ url('/') }}">
-                    <img 
-                        src="{{ asset('assets/img/logo.png') }}" 
-                        alt="Click Store Logo"
-                        class="navbar-logo"
-                    >
-                </a>
+    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+            <i class="ti ti-menu-2 ti-sm"></i>
+        </a>
+    </div>
 
+    <div class="container">
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+        <!-- 🔥 Brand Text -->
+        <a class="navbar-brand ms-4 d-flex align-items-center" href="https://erp.clickstoreeg.com" target="_blank">
+            <span class="navbar-brand-text">
+                Meter for kitchens
+            </span>
+        </a>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="{{ __('Toggle navigation') }}">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-                    </ul>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
+            <!-- Left Side -->
+            <ul class="navbar-nav me-auto"></ul>
 
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown"  class="btn btn-outline-primary" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
+            <!-- Right Side -->
+            <ul class="navbar-nav ms-auto">
 
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
+                @guest
+                    @if (Route::has('login'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">
+                                {{ __('Login') }}
+                            </a>
+                        </li>
+                    @endif
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
+                    @if (Route::has('register'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}">
+                                {{ __('Register') }}
+                            </a>
+                        </li>
+                    @endif
+                @else
+                    <li class="nav-item dropdown">
+                        <a
+                            id="navbarDropdown"
+                            class="btn btn-outline-primary dropdown-toggle"
+                            href="#"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
+                            {{ Auth::user()->name }}
+                        </a>
 
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a class="dropdown-item" href="#"
+                               onclick="event.preventDefault();
+                               document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
 
-            <!-- Search Small Screens -->
-            <div class="navbar-search-wrapper search-input-wrapper d-none">
-              <input
-                type="text"
-                class="form-control search-input container-xxl border-0"
-                placeholder="Search..."
-                aria-label="Search..." />
-              <i class="ti ti-x ti-sm search-toggler cursor-pointer"></i>
-            </div>
-          </nav>
+                            <form id="logout-form"
+                                  action="{{ route('logout') }}"
+                                  method="POST"
+                                  class="d-none">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
+                @endguest
 
-          <!-- / Navbar -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Search Small Screens -->
+    <div class="navbar-search-wrapper search-input-wrapper d-none">
+        <input
+            type="text"
+            class="form-control search-input container-xxl border-0"
+            placeholder="Search..."
+            aria-label="Search..." />
+        <i class="ti ti-x ti-sm search-toggler cursor-pointer"></i>
+    </div>
+</nav>
+<!-- / Navbar -->

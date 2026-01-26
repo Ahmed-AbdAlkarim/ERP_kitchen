@@ -45,7 +45,7 @@
                     <i class="fas fa-dollar-sign fa-2x me-3 opacity-75"></i>
                     <div>
                         <h6 class="mb-1">إجمالي المبيعات اليوم</h6>
-                        <h5 class="mb-0 fw-bold">{{ number_format($todaySales, 2) }} ج.م</h5>
+                        <h5 class="mb-0 fw-bold">{{ number_format($todaySales, 2) }} ر.س</h5>
                         <small class="opacity-75">مبيعات اليوم</small>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                         <i class="fas fa-money-bill-wave fa-2x me-3 opacity-75"></i>
                         <div>
                             <h6 class="mb-1">الأرباح اليومية</h6>
-                            <h5 class="mb-0 fw-bold">{{ number_format($netProfit, 2) }} ج.م</h5>
+                            <h5 class="mb-0 fw-bold">{{ number_format($netProfit, 2) }} ر.س</h5>
                             <small class="opacity-75">إجمالي ربح اليوم</small>
                         </div>
                     </div>
@@ -166,7 +166,7 @@
                             <td>{{ $invoice->invoice_number }}</td>
                             <td>{{ $invoice->customer->name ?? 'غير محدد' }}</td>
                             <td>{{ $invoice->items->first()->product->name ?? 'غير محدد' }}</td>
-                            <td>{{ number_format($invoice->total, 2) }} ج.م</td>
+                            <td>{{ number_format($invoice->total, 2) }} ر.س</td>
                             <td>
                                 @switch($invoice->status)
                                     @case('paid') <span class="badge bg-success">مدفوع</span> @break
