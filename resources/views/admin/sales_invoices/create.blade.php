@@ -150,13 +150,16 @@
 <datalist id="products">
 @foreach($products as $product)
     <option
-        value="{{ $product->name }}"
+        value="{{ $product->sku }} - {{ $product->name }}"
         data-id="{{ $product->id }}"
+        data-name="{{ $product->name }}"
+        data-sku="{{ $product->sku }}"
         data-price="{{ $product->selling_price }}"
         data-min-allowed-price="{{ $product->min_allowed_price }}">
     </option>
 @endforeach
 </datalist>
+
 
 {{-- العملاء --}}
 <datalist id="customers">
@@ -228,16 +231,27 @@ $('#discount').on('input', updateTotals);
 
 $(document).on('input', '.product-name', function () {
     let val = $(this).val();
+
     let option = $('#products option').filter(function () {
         return this.value === val;
     }).first();
 
     let row = $(this).closest('tr');
-    row.find('.product-id').val(option.data('id') || '');
-    row.find('.price').val(option.data('price') || 0);
-    row.find('.min_allowed_price').val(option.data('minAllowedPrice') || 0);
+
+    if (option.length) {
+        row.find('.product-id').val(option.data('id'));
+        row.find('.price').val(option.data('price'));
+        row.find('.min_allowed_price').val(option.data('min-allowed-price'));
+
+        // 👇 يخلي الاسم بس
+        $(this).val(option.data('name'));
+    } else {
+        row.find('.product-id').val('');
+    }
+
     updateRow(row);
 });
+
 
 $(document).on('input', '.qty', function () {
     updateRow($(this).closest('tr'));
