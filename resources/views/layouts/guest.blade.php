@@ -66,7 +66,7 @@
 
         <!-- Left: Logo -->
         <a
-            href="https://erp.clickstoreeg.com"
+            href="https://clicksolutions-ar.com"
             target="_blank"
             class="flex items-center gap-3"
         >
