@@ -32,10 +32,10 @@
 
   <!-- Logo -->
   <div class="app-brand demo px-3">
-    <a href="https://erp.clickstoreeg.com" target="_blank" class="app-brand-link">
+    <a href="https://clicksolutions-ar.com" target="_blank" class="app-brand-link">
       <span class="app-brand-logo">
         <img 
-          src="{{ asset('assets/img/logo.png') }}" 
+          src="{{ asset('assets/img/click.png') }}" 
           alt="Click Store Logo"
           class="sidebar-logo"
         >

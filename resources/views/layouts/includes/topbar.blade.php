@@ -4,7 +4,7 @@
         font-size: 20px;
         font-weight: 800;
         letter-spacing: 0.5px;
-        color: #7367F0; /* نفس ألوان الثيم */
+        color: #000000; /* نفس ألوان الثيم */
         text-transform: capitalize;
         white-space: nowrap;
     }
@@ -29,9 +29,18 @@
     <div class="container">
 
         <!-- 🔥 Brand Text -->
-        <a class="navbar-brand ms-4 d-flex align-items-center" href="https://erp.clickstoreeg.com" target="_blank">
+        <a class="navbar-brand ms-4 d-flex align-items-center" href="https://clicksolutions-ar.com" target="_blank">
             <span class="navbar-brand-text">
-                Meter for kitchens
+                zoom for kitchen
+            </span>
+                &nbsp;&nbsp;
+            <span class="navbar-brand-text">
+                
+                <img 
+                    src="{{ asset('assets/img/zoom.png') }}" 
+                    alt="Click Store Logo"
+                    class="sidebar-logo"
+                    >
             </span>
         </a>
 

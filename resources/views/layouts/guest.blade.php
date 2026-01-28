@@ -71,14 +71,14 @@
             class="flex items-center gap-3"
         >
             <img
-                src="{{ asset('assets/img/logowhite.png') }}"
+                src="{{ asset('assets/img/click.png') }}"
                 alt="Click Solutions Logo"
                 class="login-logo"
             >
 
             <div class="leading-tight">
                 <h1 class="text-base font-extrabold text-white">
-                    Meter for Kitchens
+                    Zoom for Kitchens
                 </h1>
                 <p class="text-[11px] text-white/70">
                     ERP System for Kitchen Factories
@@ -88,7 +88,7 @@
 
         <!-- Right: Click Solutions -->
         <a
-            href="https://erp.clickstoreeg.com"
+            href="https://clicksolutions-ar.com"
             target="_blank"
             class="text-base font-extrabold text-white
                    tracking-wide hover:opacity-90 transition"
@@ -117,7 +117,7 @@
     <p class="text-white/70 text-sm">
         © Made with ❤️ by
         <a
-            href="https://erp.clickstoreeg.com"
+            href="https://clicksolutions-ar.com"
             target="_blank"
             class="font-semibold underline hover:text-white"
         >
