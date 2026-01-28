@@ -52,6 +52,7 @@
                                 <th>رقم الفاتورة</th>
                                 <th>التاريخ</th>
                                 <th>العميل</th>
+                                <th>الموظف المسؤول</th>
                                 <th>الإجمالي</th>
                                 <th>الحالة</th>
                                 @if(auth()->user()->can('show_sales_invoice_details') || auth()->user()->can('edit_sales_invoice') || auth()->user()->can('delete_sales_invoice'))
@@ -65,6 +66,7 @@
                                     <td class="fw-bold">{{ $invoice->invoice_number }}</td>
                                     <td>{{ $invoice->invoice_date->format('d/m/Y') }}</td>
                                     <td>{{ $invoice->customer->name ?? '-' }}</td>
+                                    <td>{{ $invoice->user->name ?? '-' }}</td>
                                     <td class="fw-bold text-success">{{ number_format($invoice->total, 2) }} ر.س</td>
                                     <td>
                                         @switch($invoice->status)
@@ -104,7 +106,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="text-center py-4 text-muted">
+                                    <td colspan="8" class="text-center py-4 text-muted">
                                         <i class="fas fa-shopping-cart fa-2x mb-2"></i>
                                         <br>الفاتورة التي تبحث عنها غير موجودة
                                     </td>

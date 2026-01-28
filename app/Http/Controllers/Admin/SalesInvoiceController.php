@@ -23,12 +23,15 @@ class SalesInvoiceController extends Controller
 
     public function index(Request $request)
     {
-        $invoices = SalesInvoice::with('customer')
+        $invoices = SalesInvoice::with(['customer', 'user'])
             ->when($request->search, function ($q) use ($request) {
                 $q->where(function($query) use ($request) {
                     $query->where('invoice_number', 'like', "%{$request->search}%")
                         ->orWhereHas('customer', function($customerQuery) use ($request) {
                             $customerQuery->where('name', 'like', "%{$request->search}%");
+                        })
+                        ->orWhereHas('user', function($userQuery) use ($request) {
+                            $userQuery->where('name', 'like', "%{$request->search}%");
                         });
                 });
             })
@@ -41,6 +44,7 @@ class SalesInvoiceController extends Controller
 
         return view('admin.sales_invoices.index', compact('invoices'));
     }
+
 
     public function show($id)
     {

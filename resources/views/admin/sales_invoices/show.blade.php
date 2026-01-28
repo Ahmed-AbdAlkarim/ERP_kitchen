@@ -11,6 +11,7 @@
 
     @if($invoice->customer)
         <p>العميل: {{ $invoice->customer->name }}</p>
+        <p>الموظف المسؤول: {{ $invoice->user->name }}</p>
         <p>الهاتف: {{ $invoice->customer->phone }}</p>
         <p>العنوان: {{ $invoice->customer->address ?? '-' }}</p>
     @endif

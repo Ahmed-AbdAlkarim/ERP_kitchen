@@ -62,12 +62,12 @@
 {{-- بيانات الشركة --}}
 <table class="no-border mb-10">
     <tr>
-        <td><strong>اسم الشركة:</strong> كيتشن ميتر للمطابخ</td>
+        <td><strong>اسم الشركة:</strong> زووم للمطابخ</td>
         <td><strong>العنوان:</strong> الرياض - الشفا - بدر</td>
     </tr>
     <tr>
-        <td><strong>الرقم الضريبي:</strong></td>
-        <td></td>
+        <td><strong>الرقم الضريبي:</strong>310858801200003</td>
+        <td><strong>سجل تجاري رقم:</strong>1010685762</td>
     </tr>
 </table>
 
